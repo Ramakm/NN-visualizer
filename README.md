@@ -1,6 +1,10 @@
-# Neural Network Visualizer 🧠
+# Neural Network Visualizer 🧠✨
 
-An interactive 3D visualization of a neural network performing MNIST handwritten digit recognition in real-time. Draw digits and watch how activations propagate through the network layers!
+**Interactive 3D visualization of neural networks performing MNIST handwritten digit recognition in real-time.**
+
+Draw digits and watch activations flow through the network layers in beautiful 3D!
+
+> This is a complete clone of [DFin/Neural-Network-Visualisation](https://github.com/DFin/Neural-Network-Visualisation) with **100% identical functionality** and enhanced documentation.
 
 ![Neural Network Visualization](https://img.shields.io/badge/Status-Active-success)
 ![License](https://img.shields.io/badge/License-MIT-blue)

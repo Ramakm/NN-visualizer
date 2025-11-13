@@ -15,8 +15,9 @@ data/
 *.h5
 
 # Exports (keep structure but ignore large files)
-exports/*.json
 exports/*/*.json
+# Allow main weights file
+!exports/mlp_weights.json
 
 # IDE
 .vscode/

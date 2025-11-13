@@ -3,94 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neural Network Visualizer - MNIST Handwriting Recognition</title>
+    <title>Neural Network Visualizer - MNIST MLP</title>
     <link rel="stylesheet" href="./assets/main.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Header -->
-    <header class="app-header">
-        <div class="header-content">
-            <h1 class="app-title">
-                <span class="gradient-text">Neural Network</span> Visualizer
-            </h1>
-            <p class="app-subtitle">Interactive MNIST Handwriting Recognition</p>
-        </div>
-        <div class="header-actions">
-            <button id="infoButton" class="header-btn" aria-label="Information">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="16" x2="12" y2="12"></line>
-                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                </svg>
-            </button>
-            <button id="advancedSettingsButton" class="header-btn" aria-label="Settings">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="3"></circle>
-                    <path d="M12 1v6m0 6v6m8-8h-6M7 12H1"></path>
-                </svg>
-            </button>
-        </div>
-    </header>
+    <!-- 2D Grid Overlay -->
+    <div id="overlay2d" class="overlay-2d">
+      <div class="container">
+        <div id="gridContainer" class="grid-container"></div>
+      </div>
+    </div>
 
-    <!-- Main Content Area -->
-    <div class="main-container">
-        <!-- Left Panel: Drawing Canvas -->
-        <div class="panel drawing-panel">
-            <div class="panel-header">
-                <h2 class="panel-title">Draw a Digit</h2>
-                <button id="resetBtn" class="icon-btn reset-btn" aria-label="Clear canvas">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m3 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6h14z"></path>
-                    </svg>
-                </button>
-            </div>
-            <div class="canvas-wrapper">
-                <div id="gridContainer" class="grid-container"></div>
-                <div class="canvas-instructions">
-                    <span>🖱️ Left click to draw • Right click to erase</span>
-                </div>
-            </div>
-            <div class="digit-samples">
-                <p class="samples-label">Quick test samples:</p>
-                <div id="mnistImagesContainer" class="mnist-samples-grid"></div>
-            </div>
-        </div>
+    <!-- Reset Button -->
+    <div id="resetButtonContainer" class="reset-button-container">
+        <button id="resetBtn">✖</button>
+    </div>
 
-        <!-- Center Panel: 3D Visualization -->
-        <div class="panel visualization-panel">
-            <div class="panel-header">
-                <h2 class="panel-title">Network Architecture</h2>
-                <div id="networkInfoPanel" class="network-info-badge"></div>
-            </div>
-            <div id="visualizerContainer" class="visualizer-container"></div>
-            <div class="viz-instructions">
-                <div class="instruction-item">
-                    <span class="icon">↻</span>
-                    <span>Drag to rotate</span>
-                </div>
-                <div class="instruction-item">
-                    <span class="icon">⊕</span>
-                    <span>Scroll to zoom</span>
-                </div>
-                <div class="instruction-item">
-                    <span class="icon">⇄</span>
-                    <span>Right-drag to pan</span>
-                </div>
-            </div>
+    <!-- Prediction Chart Overlay -->
+    <div id="predictionOverlay" class="prediction-overlay">
+        <div class="prediction-container">
+            <div id="predictionChart"></div>
         </div>
+        <div id="networkInfoPanel" class="network-info-panel"></div>
+    </div>
 
-        <!-- Right Panel: Predictions -->
-        <div class="panel prediction-panel">
-            <div class="panel-header">
-                <h2 class="panel-title">Predictions</h2>
+    <!-- Instructions Overlay -->
+    <div id="instructionsOverlay" class="instructions-overlay">
+        <div class="instructions-container">
+            <div class="instructions-content">
+                <p><strong>Drawing:</strong> Click and drag on the grid (Right-click to erase)</p>
+                <p><strong>3D Controls:</strong> • Left drag = rotate • Right drag = pan • Scroll = zoom</p>
             </div>
-            <div id="predictionChart" class="prediction-chart"></div>
-            <div id="neuronDetailPanel" class="neuron-detail-panel"></div>
         </div>
     </div>
+
+    <!-- Mobile Instructions Overlay -->
+    <div id="mobileInstructionsOverlay" class="mobile-instructions-overlay">
+        <div class="mobile-instructions-content">
+            <div class="mobile-instructions-title">Touch Controls</div>
+            <ul class="mobile-gesture-list">
+                <li><strong>Draw:</strong> Tap and drag on the grid</li>
+                <li><strong>Rotate:</strong> Drag with one finger</li>
+                <li><strong>Pan:</strong> Move with two fingers</li>
+                <li><strong>Zoom:</strong> Pinch to zoom</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Floating Controls -->
+    <div class="floating-controls">
+        <button
+            id="advancedSettingsButton"
+            class="floating-button advanced-settings-button"
+            aria-haspopup="dialog"
+            aria-controls="advancedSettingsModal"
+            type="button"
+        >
+            <span>⚙</span>
+        </button>
+        <button
+            id="infoButton"
+            class="floating-button info-button"
+            aria-haspopup="dialog"
+            aria-controls="infoModal"
+            type="button"
+        >
+            <span>i</span>
+        </button>
+    </div>
+
+    <!-- MNIST Sample Images - Bottom Edge -->
+    <div id="mnistImagesContainer" class="mnist-images-container"></div>
+
+    <!-- Neuron Detail Panel -->
+    <div id="neuronDetailPanel" class="neuron-detail-panel" aria-live="polite"></div>
 
     <!-- Training Timeline Slider -->
     <div id="timelineOverlay" class="timeline-overlay hidden">
@@ -111,20 +100,28 @@
             >
             <div class="timeline-meta">
                 <span id="timelineLabel" class="timeline-label"></span>
-                <span id="timelineMetrics" class="timeline-metrics"></span>
+                <span id="timelineMetrics" class="timeline-metrics timeline-metrics--empty"></span>
             </div>
         </div>
     </div>
 
+    <a
+      href="https://github.com/DFin/Neural-Network-Visualisation"
+      class="github-link"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      https://github.com/DFin/Neural-Network-Visualisation
+    </a>
+
     <!-- Info Modal -->
-    <div id="infoModal" class="modal">
-        <div class="modal-overlay"></div>
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>About This Visualizer</h3>
-                <button id="closeInfoModal" class="modal-close">&times;</button>
+    <div id="infoModal" class="info-modal">
+        <div class="info-modal-content">
+            <div class="info-modal-header">
+                <h3>MNIST Neural Network Visualizer</h3>
+                <button id="closeInfoModal" class="close-modal-btn">×</button>
             </div>
-            <div class="modal-body">
+            <div class="info-modal-body">
                 <h4>Interactive Neural Network Visualization</h4>
                 <p>This application visualizes a compact Multi-Layer Perceptron (MLP) trained on the MNIST handwritten digit dataset. Draw a digit and watch in real-time as activations propagate through the network layers.</p>
 
@@ -161,19 +158,18 @@
     </div>
 
     <!-- Advanced Settings Modal -->
-    <div id="advancedSettingsModal" class="modal">
-        <div class="modal-overlay"></div>
-        <div class="modal-content">
-            <div class="modal-header">
+    <div id="advancedSettingsModal" class="advanced-modal">
+        <div class="advanced-modal-content">
+            <div class="advanced-modal-header">
                 <h3>Advanced Settings</h3>
-                <button id="closeAdvancedSettings" class="modal-close">&times;</button>
+                <button id="closeAdvancedSettings" class="close-modal-btn">×</button>
             </div>
-            <div class="modal-body">
-                <div class="setting-group">
-                    <label for="connectionLimitSlider" class="setting-label">
+            <div class="advanced-modal-body">
+                <div class="advanced-control">
+                    <label for="connectionLimitSlider" class="advanced-label">
                         Max Connections Per Neuron
                     </label>
-                    <div class="setting-control">
+                    <div class="advanced-slider">
                         <input
                             id="connectionLimitSlider"
                             type="range"
@@ -182,18 +178,18 @@
                             step="1"
                             value="24"
                         >
-                        <span id="connectionLimitValue" class="setting-value">24</span>
+                        <span id="connectionLimitValue" class="advanced-value">24</span>
                     </div>
-                    <p class="setting-hint">
+                    <p class="advanced-hint">
                         Controls how many of the strongest incoming weights are displayed per neuron. Higher values may slow performance.
                     </p>
                 </div>
 
-                <div class="setting-group">
-                    <label for="connectionThresholdSlider" class="setting-label">
+                <div class="advanced-control">
+                    <label for="connectionThresholdSlider" class="advanced-label">
                         Connection Weight Threshold
                     </label>
-                    <div class="setting-control">
+                    <div class="advanced-slider">
                         <input
                             id="connectionThresholdSlider"
                             type="range"
@@ -202,18 +198,18 @@
                             step="0.0005"
                             value="0"
                         >
-                        <span id="connectionThresholdValue" class="setting-value">0.0000</span>
+                        <span id="connectionThresholdValue" class="advanced-value">0.0000</span>
                     </div>
-                    <p class="setting-hint">
+                    <p class="advanced-hint">
                         Hides connections with absolute weight below this threshold. 0 shows all connections.
                     </p>
                 </div>
 
-                <div class="setting-group">
-                    <label for="connectionThicknessSlider" class="setting-label">
+                <div class="advanced-control">
+                    <label for="connectionThicknessSlider" class="advanced-label">
                         Connection Line Thickness
                     </label>
-                    <div class="setting-control">
+                    <div class="advanced-slider">
                         <input
                             id="connectionThicknessSlider"
                             type="range"
@@ -221,18 +217,18 @@
                             max="0.03"
                             step="0.001"
                         >
-                        <span id="connectionThicknessValue" class="setting-value"></span>
+                        <span id="connectionThicknessValue" class="advanced-value"></span>
                     </div>
-                    <p class="setting-hint">
+                    <p class="advanced-hint">
                         Adjusts the visual thickness of connection lines in the 3D view.
                     </p>
                 </div>
 
-                <div class="setting-group">
-                    <label for="brushThicknessSlider" class="setting-label">
+                <div class="advanced-control">
+                    <label for="brushThicknessSlider" class="advanced-label">
                         Drawing Brush Size
                     </label>
-                    <div class="setting-control">
+                    <div class="advanced-slider">
                         <input
                             id="brushThicknessSlider"
                             type="range"
@@ -241,18 +237,18 @@
                             step="0.1"
                             value="1.4"
                         >
-                        <span id="brushThicknessValue" class="setting-value">1.4</span>
+                        <span id="brushThicknessValue" class="advanced-value">1.4</span>
                     </div>
-                    <p class="setting-hint">
+                    <p class="advanced-hint">
                         Smaller values create finer lines; larger values fill the grid faster.
                     </p>
                 </div>
 
-                <div class="setting-group">
-                    <label for="brushStrengthSlider" class="setting-label">
+                <div class="advanced-control">
+                    <label for="brushStrengthSlider" class="advanced-label">
                         Drawing Intensity
                     </label>
-                    <div class="setting-control">
+                    <div class="advanced-slider">
                         <input
                             id="brushStrengthSlider"
                             type="range"
@@ -261,9 +257,9 @@
                             step="0.05"
                             value="0.95"
                         >
-                        <span id="brushStrengthValue" class="setting-value">95%</span>
+                        <span id="brushStrengthValue" class="advanced-value">95%</span>
                     </div>
-                    <p class="setting-hint">
+                    <p class="advanced-hint">
                         Determines how much a brush stroke increases pixel brightness.
                     </p>
                 </div>
@@ -271,19 +267,9 @@
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="app-footer">
-        <a href="https://github.com/DFin/Neural-Network-Visualisation" target="_blank" rel="noopener noreferrer" class="github-link">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-            </svg>
-            View on GitHub
-        </a>
-    </footer>
-
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-    <script type="module" src="./assets/main.js"></script>
+    <script src="./assets/main.js"></script>
 </body>
 </html>
