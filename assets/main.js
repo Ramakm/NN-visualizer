@@ -1045,7 +1045,7 @@ function setupTimelineSlider(timelineSnapshots, options = {}) {
 class DigitSketchPad {
   constructor(container, rows, cols, options = {}) {
     if (!container) {
-      throw new Error("Raster-Container nicht gefunden.");
+      throw new Error("Grid container not found.");
     }
     this.container = container;
     this.rows = rows;
@@ -1230,11 +1230,11 @@ class DigitSketchPad {
 
   setPixels(pixels) {
     if (!pixels || typeof pixels.length !== "number") {
-      throw new Error("Ungültige Pixelwerte für den Zeichenblock.");
+      throw new Error("Invalid pixel values for the drawing grid.");
     }
     if (pixels.length !== this.values.length) {
       throw new Error(
-        `Erwartete ${this.values.length} Pixel, erhielt aber ${pixels.length}.`,
+        `Expected ${this.values.length} pixels, but received ${pixels.length}.`,
       );
     }
     for (let i = 0; i < this.values.length; i += 1) {
@@ -1322,7 +1322,7 @@ class FeedForwardModel {
 
   updateLayers(layerDefinitions) {
     if (!Array.isArray(layerDefinitions) || layerDefinitions.length === 0) {
-      throw new Error("Neue Layerdefinitionen müssen mindestens eine Schicht enthalten.");
+      throw new Error("New layer definitions must contain at least one layer.");
     }
     this.layers = layerDefinitions.map((layer, index) => this.normaliseLayer(layer, index));
     this.architecture = this.computeArchitecture(this.layers);
@@ -1379,7 +1379,7 @@ class ProbabilityPanel {
     this.container = container;
     this.rows = [];
     if (!this.container) {
-      throw new Error("Vorhersage-Diagrammcontainer nicht gefunden.");
+      throw new Error("Prediction chart container not found.");
     }
     this.build();
   }
