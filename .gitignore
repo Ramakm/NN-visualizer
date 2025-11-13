@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+
+# Data
+data/
+*.pkl
+*.h5
+
+# Exports (keep structure but ignore large files)
+exports/*.json
+exports/*/*.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Node
+node_modules/
+package-lock.json
+
+# Logs
+*.log
