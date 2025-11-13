@@ -2,7 +2,7 @@
 
 ## ✅ What's Been Done
 
-This project is a complete clone of the [DFin/Neural-Network-Visualisation](https://github.com/DFin/Neural-Network-Visualisation) repository with the **exact same functionality** but enhanced with modern UI touches.
+This project is a complete clone of the [DFin/Neural-Network-Visualisation](https://github.com/Ramakm/NN-visualizer) repository with the **exact same functionality** but enhanced with modern UI touches.
 
 ### Files Cloned & Enhanced:
 
@@ -269,7 +269,7 @@ Requires WebGL for 3D rendering.
 
 ## 🙏 Credits
 
-- **Original Implementation**: [DFin/Neural-Network-Visualisation](https://github.com/DFin/Neural-Network-Visualisation)
+- **Original Implementation**: [DFin/Neural-Network-Visualisation](https://github.com/Ramakm/NN-visualizer)
 - **MNIST Dataset**: Yann LeCun, Corinna Cortes, Christopher J.C. Burges
 - **Three.js**: 3D graphics library
 - **PyTorch**: Deep learning framework

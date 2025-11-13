@@ -221,7 +221,7 @@ Your Neural Network Visualizer now looks **EXACTLY** like the professional scree
 
 ## 🙏 Credits
 
-- **Original Visualization**: [DFin/Neural-Network-Visualisation](https://github.com/DFin/Neural-Network-Visualisation)
+- **Original Visualization**: [DFin/Neural-Network-Visualisation](https://github.com/Ramakm/NN-visualizer)
 - **Three.js**: Three.js community
 - **MNIST**: Yann LeCun et al.
 - **PyTorch**: Meta AI

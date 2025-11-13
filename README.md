@@ -4,7 +4,7 @@
 
 Draw digits and watch activations flow through the network layers in beautiful 3D!
 
-> This is a complete clone of [DFin/Neural-Network-Visualisation](https://github.com/DFin/Neural-Network-Visualisation) with **100% identical functionality** and enhanced documentation.
+> This is a complete clone of [DFin/Neural-Network-Visualisation](https://github.com/Ramakm/NN-visualizer) with **100% identical functionality** and enhanced documentation.
 
 ![Neural Network Visualization](https://img.shields.io/badge/Status-Active-success)
 ![License](https://img.shields.io/badge/License-MIT-blue)
@@ -235,7 +235,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-- Original concept inspired by [DFin/Neural-Network-Visualisation](https://github.com/DFin/Neural-Network-Visualisation)
+- Original concept inspired by [DFin/Neural-Network-Visualisation](https://github.com/Ramakm/NN-visualizer)
 - MNIST dataset by Yann LeCun
 - Three.js community
 

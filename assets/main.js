@@ -175,7 +175,7 @@ async function initializeVisualizer() {
   const weightDefinitionUrl = new URL(VISUALIZER_CONFIG.weightUrl, window.location.href);
   const definition = await fetchNetworkDefinition(weightDefinitionUrl.toString());
   if (!definition?.network) {
-    throw new Error("Ungültige Netzwerkdefinition.");
+    throw new Error("Invalid network definition.");
   }
 
   const timelineSnapshots = hydrateTimeline(definition.timeline, {
@@ -183,7 +183,7 @@ async function initializeVisualizer() {
     baseUrl: weightDefinitionUrl,
   });
   if (!timelineSnapshots.length) {
-    throw new Error("Keine gültigen Timeline-Snapshots gefunden.");
+    throw new Error("No valid timeline snapshots found.");
   }
   const defaultSnapshotIndex = Math.max(timelineSnapshots.length - 1, 0);
   const initialSnapshot = timelineSnapshots[defaultSnapshotIndex];
@@ -1085,7 +1085,7 @@ class DigitSketchPad {
     this.container.innerHTML = "";
     const title = document.createElement("div");
     title.className = "grid-title";
-    title.textContent = "Ziffer zeichnen";
+    title.textContent = "DRAW A NUMBER";
     this.interactionRow = document.createElement("div");
     this.interactionRow.className = "grid-interaction-row";
     this.interactionRow.appendChild(this.gridElement);
@@ -1271,7 +1271,7 @@ class DigitSketchPad {
 class FeedForwardModel {
   constructor(definition) {
     if (!definition.layers?.length) {
-      throw new Error("Die Netzwerkdefinition muss Schichten enthalten.");
+      throw new Error("Network definition must contain layers.");
     }
     this.normalization = definition.normalization ?? { mean: 0, std: 1 };
     this.architecture = Array.isArray(definition.architecture)
@@ -1387,7 +1387,7 @@ class ProbabilityPanel {
   build() {
     this.container.innerHTML = "";
     const title = document.createElement("h3");
-    title.textContent = "Wahrscheinlichkeiten der Ziffern";
+    title.textContent = "PROBABILITIES OF THE DIGITS";
     this.container.appendChild(title);
 
     this.chartElement = document.createElement("div");
@@ -1443,7 +1443,7 @@ class NetworkInfoPanel {
   constructor(container) {
     this.container = container;
     if (!this.container) {
-      throw new Error("Netzwerkinfo-Container nicht gefunden.");
+      throw new Error("Network info container not found.");
     }
     this.numberFormatter = new Intl.NumberFormat("de-DE");
     this.build();
@@ -1456,7 +1456,7 @@ class NetworkInfoPanel {
     }
     this.titleElement = document.createElement("h3");
     this.titleElement.className = "network-info-panel__title";
-    this.titleElement.textContent = "Netzwerkübersicht";
+    this.titleElement.textContent = "NETWORK OVERVIEW";
 
     this.summaryElement = document.createElement("div");
     this.summaryElement.className = "network-info-panel__summary";
@@ -1466,7 +1466,7 @@ class NetworkInfoPanel {
 
     this.emptyElement = document.createElement("div");
     this.emptyElement.className = "network-info-panel__empty";
-    this.emptyElement.textContent = "Keine Netzwerkdaten verfügbar.";
+    this.emptyElement.textContent = "No network data available.";
 
     this.container.appendChild(this.titleElement);
     this.container.appendChild(this.summaryElement);
@@ -1563,7 +1563,7 @@ class NetworkInfoPanel {
 
     const totalParameters = layerSummaries.reduce((sum, entry) => sum + entry.parameterCount, 0);
     this.summaryElement.innerHTML = "";
-    this.summaryElement.appendChild(this.buildSummaryLine("Gesamtparameter", totalParameters));
+    this.summaryElement.appendChild(this.buildSummaryLine("Total Parameters", totalParameters));
     if (architecture.length > 0) {
       const firstArchitectureValue = architecture[0];
       const lastArchitectureValue = architecture[architecture.length - 1];
@@ -1576,10 +1576,10 @@ class NetworkInfoPanel {
         typeof lastArchitectureValue === "number" && Number.isFinite(lastArchitectureValue)
           ? lastArchitectureValue
           : lastLayer?.outputSize ?? 0;
-      this.summaryElement.appendChild(this.buildSummaryLine("Eingabeknoten", inputNodes));
-      this.summaryElement.appendChild(this.buildSummaryLine("Ausgabeklassen", outputNodes));
+      this.summaryElement.appendChild(this.buildSummaryLine("Input Nodes", inputNodes));
+      this.summaryElement.appendChild(this.buildSummaryLine("Output Classes", outputNodes));
     }
-    this.summaryElement.appendChild(this.buildSummaryLine("Layer (inkl. Ausgaben)", layerSummaries.length));
+    this.summaryElement.appendChild(this.buildSummaryLine("Layers (incl. Output)", layerSummaries.length));
 
     this.layersElement.innerHTML = "";
     layerSummaries.forEach((entry) => {
@@ -1593,9 +1593,9 @@ class NetworkInfoPanel {
 
       const metrics = document.createElement("div");
       metrics.className = "network-info-panel__layer-metrics";
-      metrics.appendChild(this.buildMetric("Gewichte", entry.weightCount));
+      metrics.appendChild(this.buildMetric("Weights", entry.weightCount));
       metrics.appendChild(this.buildMetric("Bias", entry.biasCount));
-      metrics.appendChild(this.buildMetric("Summe", entry.parameterCount));
+      metrics.appendChild(this.buildMetric("Total", entry.parameterCount));
 
       layerRow.appendChild(title);
       layerRow.appendChild(metrics);
@@ -1650,10 +1650,10 @@ class NeuronDetailPanel {
           .map(
             (entry) => `
       <div class="neuron-detail-panel__row">
-        <div><small>Quelle</small><br><strong>#${entry.sourceIndex + 1}</strong></div>
+        <div><small>Source</small><br><strong>#${entry.sourceIndex + 1}</strong></div>
         <div><small>Input</small><br>${this.formatValue(entry.sourceActivation)}</div>
-        <div><small>Gewicht</small><br>${this.formatValue(entry.weight)}</div>
-        <div><small>Produkt</small><br><strong>${this.formatValue(entry.contribution)}</strong></div>
+        <div><small>Weight</small><br>${this.formatValue(entry.weight)}</div>
+        <div><small>Product</small><br><strong>${this.formatValue(entry.contribution)}</strong></div>
       </div>
     `,
           )
@@ -1665,10 +1665,10 @@ class NeuronDetailPanel {
           .map(
             (entry) => `
       <div class="neuron-detail-panel__row">
-        <div><small>Ziel</small><br><strong>#${entry.targetIndex + 1}</strong></div>
-        <div><small>Aktivierung (Ziel)</small><br>${this.formatValue(entry.targetActivation)}</div>
-        <div><small>Gewicht</small><br>${this.formatValue(entry.weight)}</div>
-        <div><small>Beitrag</small><br><strong>${this.formatValue(entry.contribution)}</strong></div>
+        <div><small>Target</small><br><strong>#${entry.targetIndex + 1}</strong></div>
+        <div><small>Activation (Target)</small><br>${this.formatValue(entry.targetActivation)}</div>
+        <div><small>Weight</small><br>${this.formatValue(entry.weight)}</div>
+        <div><small>Contribution</small><br><strong>${this.formatValue(entry.contribution)}</strong></div>
       </div>
     `,
           )
@@ -1713,27 +1713,27 @@ class NeuronDetailPanel {
     const incomingSection = hasIncoming
       ? `
       <div>
-        <div class="neuron-detail-panel__section-title">Eingehende Beiträge</div>
+        <div class="neuron-detail-panel__section-title">Incoming Contributions</div>
         <div class="neuron-detail-panel__row neuron-detail-panel__row--header">
-          <div>Quelle</div>
+          <div>Source</div>
           <div>Input</div>
-          <div>Gewicht</div>
-          <div>Produkt</div>
+          <div>Weight</div>
+          <div>Product</div>
         </div>
         ${incomingRows}
       </div>
     `
-      : `<div class="neuron-detail-panel__empty">Keine eingehenden Verbindungen für diese Schicht.</div>`;
+      : `<div class="neuron-detail-panel__empty">No incoming connections for this layer.</div>`;
 
     const outgoingSection = hasOutgoing
       ? `
       <div>
-        <div class="neuron-detail-panel__section-title">Ausgehende Beiträge</div>
+        <div class="neuron-detail-panel__section-title">Outgoing Contributions</div>
         <div class="neuron-detail-panel__row neuron-detail-panel__row--header">
-          <div>Ziel</div>
-          <div>Aktivierung (Ziel)</div>
-          <div>Gewicht</div>
-          <div>Beitrag</div>
+          <div>Target</div>
+          <div>Activation (Target)</div>
+          <div>Weight</div>
+          <div>Contribution</div>
         </div>
         ${outgoingRows}
       </div>
@@ -1742,7 +1742,7 @@ class NeuronDetailPanel {
 
     const summaryFormula =
       payload.preActivation !== null && payload.preActivation !== undefined
-        ? `Σ = Σ(input × gewicht)${payload.bias !== null && payload.bias !== undefined ? " + bias" : ""}`
+        ? `Σ = Σ(input × weight)${payload.bias !== null && payload.bias !== undefined ? " + bias" : ""}`
         : "";
 
     this.root.innerHTML = `
@@ -1751,7 +1751,7 @@ class NeuronDetailPanel {
           <div class="neuron-detail-panel__title">${payload.layerLabel} • Neuron ${payload.neuronIndex + 1}${
             payload.activationName ? ` (${payload.activationName})` : ""
           }</div>
-          <button type="button" class="neuron-detail-panel__close">Auswahl aufheben</button>
+          <button type="button" class="neuron-detail-panel__close">Deselect</button>
         </div>
         <div class="neuron-detail-panel__body">
           <div class="neuron-detail-panel__summary">
@@ -1759,8 +1759,8 @@ class NeuronDetailPanel {
           </div>
           ${totalsBlock}
           <div class="neuron-detail-panel__activations">
-            <span>Eingangsschicht-Größe: ${payload.previousLayerSize ?? "—"}</span>
-            <span>Ausgangsschicht-Größe: ${payload.nextLayerSize ?? "—"}</span>
+            <span>Input Layer Size: ${payload.previousLayerSize ?? "—"}</span>
+            <span>Output Layer Size: ${payload.nextLayerSize ?? "—"}</span>
           </div>
           ${incomingSection}
           ${outgoingSection}
